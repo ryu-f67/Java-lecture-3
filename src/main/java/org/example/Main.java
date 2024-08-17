@@ -3,6 +3,16 @@ package org.example;
 public class Main {
 
   public static void main(String[] args) {
-    System.out.println("Hello world!");
+    MobilePhoneNumberEntry mpne = new MobilePhoneNumberEntry();
+    boolean isOK = false;
+
+    while (!isOK) {
+      isOK = MobilePhoneNumberChecker.validatePhoneNumber(mpne.entryPhoneNumber());
+      if (isOK) {
+        break;
+      }
+      mpne.fetchScanner();
+      System.out.println();
+    }
   }
 }
