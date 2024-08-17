@@ -12,28 +12,22 @@ public class MobilePhoneNumberChecker {
     return scanner.next();
   }
 
-  private void validatePhoneNumber(String phoneNumber) {
+  private boolean validatePhoneNumber(String phoneNumber) {
     if (!phoneNumber.matches("^0[789]0-[0-9]{4}-[0-9]{4}$")) {
       System.out.println(phoneNumber + " は無効な携帯電話番号です。");
       System.out.println("電話番号の形式が違います。XXX-XXXX-XXXX のように入力してください。");
-      System.out.println();
-      scanner.nextLine();
-      checkMobilePhoneNumber();
+      return false;
     } else if (!checkNumberOfUniqueNumbers(phoneNumber)) {
       System.out.println(phoneNumber + " は無効な携帯電話番号です。");
       System.out.println("下8桁に4種類以上の数字が使用されていません。");
-      System.out.println();
-      scanner.nextLine();
-      checkMobilePhoneNumber();
+      return false;
     } else if (!checkConsecutiveNumbers(phoneNumber)) {
       System.out.println(phoneNumber + " は無効な携帯電話番号です。");
       System.out.println("下8桁に同じ数字が3回以上連続して使用されています。");
-      System.out.println();
-      scanner.nextLine();
-      checkMobilePhoneNumber();
+      return false;
     } else {
       System.out.println(phoneNumber + " は有効な携帯電話番号です。");
-      scanner.close();
+      return true;
     }
   }
 
@@ -69,7 +63,10 @@ public class MobilePhoneNumberChecker {
 
   public void checkMobilePhoneNumber() {
     String mobilePhoneNumber = entryPhoneNumber();
-    validatePhoneNumber(mobilePhoneNumber);
-
+    if (!validatePhoneNumber(mobilePhoneNumber)) {
+      scanner.nextLine();
+      System.out.println();
+      checkMobilePhoneNumber();
+    }
   }
 }
